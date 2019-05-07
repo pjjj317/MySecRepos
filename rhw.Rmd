@@ -1,0 +1,305 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+<body>
+---
+title: "R講義整理"
+author: "林品寬"
+output: html_document
+---
+<style>
+ body{background-color:	#e0e0e0;}
+ h1{font-size:30px;}
+ h2{font-size:22px;}
+ h3{font-size:18px;font-color:red;}
+ h4{font-size:18px;line-height:18px;}
+</style>
+
+
+<h1>Outline</h1>   
+<h4>
+1. 基本程式碼整理  
+ +自創數列  
+ +基本運算  
+ +Vector組合  
+ +抽取元素  
+ +Vector運算  
+ +Simple patterned vectors  
+.  
+2. Matrix,Array,Data frame   
+ +創造矩陣  
+ +Matrix inverse
+ +創造Array  
+ +創造Data frame  
+.  
+3. 繪圖整理  
+ +Bar charts and dot chart  
+ +Pie chart  
+ +Histograms  
+ +Boxplot  
+ +Scatterplots  
+ +QQplot  
+ +增加內容豐富度  
+.  
+4. 統計模擬  
+ +Uniform  
+ +Set seed    
+ +Binomial random variables    
+ +Poisson  
+ +Exponential  
+ +Normal  
+ +Monte Carlo integration  
+.  
+.  
+</h4>
+
+<h1>Content</h1>  
+<h2>1.基本程式碼整理</h2>
+<h4>
+a.自創數列  
+```{r}
+1:20
+```  
+.  
+.  
+b.基本運算
+```{r}
+x=1:11
+mean(x)
+var(x)
+sum(x)
+```
+.  
+.  
+c.Vector組合
+```{r}
+x=c(0,7,8)
+number5to20=5:20
+c(x,number5to20)
+```
+.  
+.  
+d.抽取元素
+抽取Vector中的元素  
+```{r}
+number5to20[1]
+number5to20[-2]
+number5to20[-(3:10)]
+number5to20[c(0,3:6)]
+```
+.  
+.  
+e.Vector運算
+```{r}
+number5to20*3
+number5to20%%2:3 #第一個除2，第二個除3，類推
+```
+.  
+.  
+f.Simple patterned vectors
+```{r}
+seq(1,21,by=2)
+rep(3,12) #repeat the value 3,12times
+rep(seq(2,20,by=2),2) #repeat the pattern 2 4 ..20, twice
+rep(c(1,4),c(3,2)) #repeat 1,three times and 4, twice
+rep(c(1,4),each=3) #repeat each value three times
+rep(seq(2,20,2),rep(2,10)) #repeat each value twice
+```
+</h4>
+.  
+/  
+.  
+.  
+<h2>2.Matrix,Array,Data frame</h2>
+<h4>
+a.創造矩陣  
+```{r}
+m=matrix(1:6,nrow=2,ncol=3) #先塞行
+m
+```  
+.  
+.  
+b.Matrix 計算  
+反矩陣:solve(h)  
+eigen(h)
+.  
+.  
+c.創造Array   
+```{r}
+a=array(1:24,c(3,4,2))
+a
+```
+.  
+.  
+d.創造Data frame
+```{r}
+color=c('red','yellow','blue')
+number=c(1,2,3)
+color.number=data.frame(color,number,more.number=c(4,5,6))
+color.number
+```
+</h4>
+.  
+/  
+.  
+.  
+<h2>3.繪圖整理</h2>
+<h4>
+a.Bar charts and dot chart
+繪製簡單圖形  
+```{r}
+VADeaths
+barplot(VADeaths,beside=TRUE,legend=TRUE,ylim=c(0,90),
+        ylab='Deaths per 1000',
+        main='Death rates in Virginia')
+dotchart(VADeaths,xlim=c(0,75),
+         xlab='Deaths per 1000',
+         main='Death rates in Virginia')
+```
+.  
+.  
+b.Pie chart
+```{r}
+groupsizes=c(18,30,32,10,10)
+labels=c('A','B','C','D','E')
+pie(groupsizes,labels,col=c('grey40','white','grey','black','grey90'))
+```
+.  
+.  
+c.Histograms
+```{r}
+x=rnorm(1000)
+hist(x)
+```
+.  
+.  
+d.Boxplot
+```{r}
+boxplot(Sepal.Length~Species,data=iris,ylab='Sepal length(cm)',main='Iris measurements',boxwex=0.5)
+```
+.  
+.  
+e.Scatterplots
+```{r}
+x=rnorm(100)
+y=rpois(100,30)
+plot(x,y,main='Poisson vs Normal')
+```
+.  
+.  
+f.QQplot
+```{r}
+x=rnorm(1000)
+a=rnorm(1000)
+qqplot(x,a,main='a and x are the same')
+```
+.  
+.  
+g.增加內容豐富度  
+p(x,y,...)  
+lines(x,y,...) adds line segments  
+text(x,y,labels,...) adds text into the graph  
+abline(a,b,...) adds the line y=a+bx  
+abline(h=y,...) adds a horizontal line  
+abline(v=x,...) adds a vertical line  
+polygon(x,y...) adds a closed and possibly filled polgon  
+segments(x0,y0,x1,y1,...) draws line segments  
+arrows(x0,y0,x1,y1,...) draws arrows  
+symbols(x,y,...) draws circles, squares, thermometers, etc.  
+legeng(x,y,legend,...) draws a legend.  
+.  
+/  
+.  
+.  
+</h4>
+<h2>4.統計模擬</h2>
+<h4>
+a.uniform  
+創造一個uniform分配  
+runif(n,min=,max=b)  
+```{r}
+runif(10,min=1,max=5)
+```
+.  
+.  
+b.set seed  
+透過設定seed可以取得固定結果  
+```{r}
+set.seed(32789)
+runif(5)
+```
+.  
+.  
+c.Binomial random variables
+使用dbinom(x,size,prob)函數可取得機率
+```{r}
+dbinom(x=4,size=6,prob=0.4)
+```
+.  
+pbinom則是算cdf  
+```{r}
+pbinom(4,6,0.5)
+```
+.  
+qbinom算成功次數  
+```{r}
+qbinom(0.89,6,0.5)
+```
+.  
+rbinom會給你n個結果，一一列出
+```{r}
+rbinom(24,15,0.1)
+```
+.  
+.  
+c.Poisson
+dpois(x,lambda)
+rpois(n,lambda)
+```{r}
+dpois(x=3,lambda=0.5)
+rpois(10,3.7)
+``` 
+.  
+.  
+d.Exponential
+pexp(q,rate)，P(T<=q)
+rexp(n,rate)
+```{r}
+pexp(1,3)
+rexp(10,3)
+```
+.  
+.  
+e.Normal
+```{r}
+qnorm(0.95,mean=2.7,sd=3.3)
+rnorm(10,2.7,3.3)
+```
+.  
+.  
+f.Monte Carlo integration  
+to approximate $$\int_0^1 x^4{\rm d}x$$
+```{r}
+u=runif(100000)
+mean(u^4)
+```
+.  
+to approximate $$\int_2^5 sin(x){\rm d}x$$
+```{r}
+u=runif(10000,min=2,max=5)
+mean(sin(u)*(5-2))
+```
+.  
+to approximate $$\int_3^9\int_1^7 sin(x-y){\rm d}x {\rm d}y$$
+```{r}
+u=runif(10000,min=1,max=7)
+y=runif(10000,min=3,max=9)
+mean(sin(u-y))*42
+```
+.  
+.  
+</h4>
+</body>
